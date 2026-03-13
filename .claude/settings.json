@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -h \"charset=\" /home/mcnultyd/dev/techtalk/eml/*.eml)",
+      "Bash(grep -h \"^Content-Type: multipart\" /home/mcnultyd/dev/techtalk/eml/*.eml)",
+      "Bash(grep -h \"^Content-Type:\" /home/mcnultyd/dev/techtalk/eml/*.eml)",
+      "Bash(python3 -c \":*)",
+      "Bash(pip install:*)"
+    ]
+  }
+}

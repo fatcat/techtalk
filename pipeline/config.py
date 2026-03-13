@@ -13,6 +13,9 @@ THREADS_ASSESSED_JSON = OUTPUT_DIR / "threads_assessed.json"
 KB_ARTICLES_JSON = OUTPUT_DIR / "kb_articles.json"
 KB_INDEX_JSON = OUTPUT_DIR / "kb_index.json"
 
+UI_DIR = PROJECT_ROOT / "ui"
+KB_DATA_JS = UI_DIR / "data" / "kb_data.js"
+
 # Ensure output dirs exist
 OUTPUT_DIR.mkdir(exist_ok=True)
 LLM_CACHE_DIR.mkdir(exist_ok=True)

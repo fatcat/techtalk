@@ -9,6 +9,7 @@ from datetime import datetime, timezone
 
 from .config import (
     KB_ARTICLES_JSON,
+    KB_DATA_JS,
     KB_INDEX_JSON,
     SENDER_AUTHORITY_JSON,
     THREADS_ASSESSED_JSON,
@@ -117,7 +118,7 @@ def _parse_article(thread: Thread, response_text: str) -> KBArticle | None:
         return None
 
     doc_links = []
-    for dl in data.get("doc_links", []):
+    for dl in data.get("doc_links") or []:
         if isinstance(dl, dict) and dl.get("url"):
             doc_links.append(DocLink(
                 url=dl["url"],
@@ -126,7 +127,7 @@ def _parse_article(thread: Thread, response_text: str) -> KBArticle | None:
             ))
 
     cli_examples = []
-    for ce in data.get("cli_examples", []):
+    for ce in data.get("cli_examples") or []:
         if isinstance(ce, dict) and ce.get("command"):
             cli_examples.append(CLIExample(
                 command=ce["command"],
@@ -135,7 +136,7 @@ def _parse_article(thread: Thread, response_text: str) -> KBArticle | None:
             ))
 
     related_kbs = []
-    for rk in data.get("related_kbs", []):
+    for rk in data.get("related_kbs") or []:
         if isinstance(rk, dict) and rk.get("url"):
             related_kbs.append(DocLink(
                 url=rk["url"],
@@ -149,7 +150,7 @@ def _parse_article(thread: Thread, response_text: str) -> KBArticle | None:
         source_thread_ids=[thread.thread_id],
         products=thread.products,
         categories=thread.categories,
-        junos_versions=data.get("junos_versions", []),
+        junos_versions=data.get("junos_versions") or [],
         problem=data.get("problem", ""),
         cause=data.get("cause"),
         solution=data.get("solution", ""),
@@ -292,6 +293,19 @@ def run(
             default=str,
         )
     logger.info("Output: %s", KB_INDEX_JSON)
+
+    # Write kb_data.js for UI (JSONP-style wrapper for file:// compatibility)
+    KB_DATA_JS.parent.mkdir(parents=True, exist_ok=True)
+    with open(KB_DATA_JS, "w", encoding="utf-8") as f:
+        f.write("window.__KB_DATA__ = ")
+        json.dump(
+            index.model_dump(mode="json"),
+            f,
+            ensure_ascii=False,
+            default=str,
+        )
+        f.write(";\n")
+    logger.info("Output: %s", KB_DATA_JS)
 
     # Summary stats
     total_doc_links = sum(len(a.doc_links) for a in articles)

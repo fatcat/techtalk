@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Security Tech-Talk Knowledge Base</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <div class="header-left">
+      <h1>Security Tech-Talk KB</h1>
+      <p class="header-subtitle">HPE Knowledge Base</p>
+    </div>
+    <div class="header-right">
+      <div class="header-meta" id="header-meta"></div>
+      <button id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">&#9789;</button>
+    </div>
+  </header>
+
+  <div id="search-bar">
+    <input type="text" id="search-input" placeholder="Search articles (min 5 characters)..." autocomplete="off">
+    <span id="search-info"></span>
+  </div>
+
+  <div id="tag-cloud-section">
+    <h2>Topics</h2>
+    <span id="tag-visible-count" class="tag-cloud-count"></span>
+    <div id="tag-cloud"></div>
+  </div>
+
+  <div id="main">
+    <aside id="sidebar">
+      <div id="filter-section">
+        <div class="filter-header">
+          <h2>Filters</h2>
+          <a href="#" id="clear-filters" class="hidden">Clear all</a>
+        </div>
+
+        <div class="filter-group">
+          <h3>Categories</h3>
+          <div id="filter-categories" class="filter-list"></div>
+        </div>
+
+        <div class="filter-group">
+          <h3>Products</h3>
+          <div id="filter-products" class="filter-list"></div>
+        </div>
+
+        <div class="filter-group">
+          <h3>Confidence</h3>
+          <div id="filter-confidence" class="confidence-buttons"></div>
+        </div>
+
+        <div class="filter-group">
+          <h3>Sort</h3>
+          <div id="sort-select" class="custom-select" data-value="relevance">
+            <div class="custom-select-display">Relevance</div>
+            <div class="custom-select-options">
+              <div class="custom-select-option active" data-value="relevance">Relevance</div>
+              <div class="custom-select-option" data-value="date-desc">Date (newest)</div>
+              <div class="custom-select-option" data-value="date-asc">Date (oldest)</div>
+              <div class="custom-select-option" data-value="title">Title (A-Z)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <section id="content">
+      <div id="results-info"></div>
+      <div id="card-grid"></div>
+      <div id="empty-state" class="hidden">
+        <p>No articles match your current filters.</p>
+      </div>
+    </section>
+  </div>
+
+  <div id="detail-overlay" class="hidden">
+    <div class="detail-backdrop"></div>
+    <div class="detail-panel">
+      <button class="detail-close" aria-label="Close">&times;</button>
+      <div id="detail-content"></div>
+    </div>
+  </div>
+
+  <div id="loading">
+    <p>Loading knowledge base...</p>
+  </div>
+
+  <script src="lib/minisearch.min.js"></script>
+  <script src="data/kb_data.js"></script>
+  <script src="js/state.js"></script>
+  <script src="js/search.js"></script>
+  <script src="js/render.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
